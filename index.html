@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الهكر المعتمد</title>
+    <style>
+        :root { --main-green: #00ff41; --bg-black: #050505; --card-bg: #111; --gold: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
+        body { background-color: var(--bg-black); color: var(--main-green); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        
+        .header { font-size: 24px; margin: 20px 0; font-weight: bold; text-shadow: 0 0 10px var(--main-green); }
+        
+        /* تصميم الكروت العادية */
+        .card {
+            background: var(--card-bg);
+            border-right: 6px solid #00bcd4; /* لون أزرق خفيف زي الصورة */
+            border-radius: 15px;
+            margin: 15px auto;
+            padding: 15px 25px;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+        .card-title { color: #eee; font-size: 18px; font-weight: bold; }
+        .card-price { color: var(--main-green); font-size: 16px; }
+
+        /* الزر الكبير (اللبني) */
+        .big-btn {
+            background: #00bcd4;
+            color: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px auto;
+            max-width: 450px;
+            border: none;
+            cursor: pointer;
+            display: block;
+        }
+
+        /* الزر الذهبي VIP */
+        .gold-card {
+            background: var(--gold);
+            color: #000;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 450px;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(191, 149, 63, 0.6);
+            cursor: pointer;
+            border: none;
+        }
+
+        /* قسم الرفع */
+        .upload-box {
+            border: 2px dashed var(--main-green);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 450px;
+            margin: 30px auto;
+            background: rgba(0, 255, 65, 0.05);
+        }
+        input[type="file"] { margin: 15px 0; color: #fff; }
+        .send-btn { background: #fff; color: #000; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        
+        #status { margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">⚡ قسم الشحن الفوري والسريع ⚡</div>
+
+    <div class="card" onclick="showBank()">
+        <div class="card-price">10 ألف لكل 100 ألف</div>
+        <div class="card-title">نسخة اسنوكس</div>
+    </div>
+
+    <div class="card" onclick="showBank()">
+        <div class="card-price">10 ألف لكل 100 ألف</div>
+        <div class="card-title">ترو بورو</div>
+    </div>
+
+    <div class="card" onclick="showBank()">
+        <div class="card-price">10 ألف لكل 100 ألف</div>
+        <div class="card-title">نسخة موكا</div>
+    </div>
+
+    <button class="big-btn" onclick="showBank()">
+        🚀 تفعيل وفتح حساب في كل النسخ (20,000 جنيه) 🚀
+    </button>
+
+    <div class="gold-card" onclick="showBank()">
+        <div>👑 شراء نسخة VIP (معاملات وهمية) 👑</div>
+        <div style="margin-top: 10px;">السعر الفاخر: 120,000 جنيه</div>
+    </div>
+
+    <div class="upload-box">
+        <h3>📤 رفع إشعار التحويل</h3>
+        <p style="font-size: 12px; color: #aaa;">بعد التحويل، ارفع الصورة هنا لتصل للمدير</p>
+        <input type="file" id="imageInput" accept="image/*">
+        <button class="send-btn" onclick="uploadToServer()">إرسال الإشعار الآن</button>
+        <div id="status"></div>
+    </div>
+
+    <a href="https://t.me/YOUR_USERNAME" style="text-decoration: none;">
+        <button style="background:#24A1DE; color:white; border:none; padding:10px; border-radius:50px; position:fixed; bottom:20px; right:20px; cursor:pointer;">
+            💬 تواصل تلجرام
+        </button>
+    </a>
+
+    <script>
+        // بياناتك اللي أرسلتها
+        const TG_TOKEN = "8700058093:AAGO6eDyeDwerU4ntZkr4VSeinsn84xH0og";
+        const TG_ID = "8426932451";
+
+        function showBank() {
+            alert("رقم الحساب للتحويل: \n 2795410 \n بنك الخرطوم \n بعد التحويل ارفع الإشعار بالأسفل.");
+        }
+
+        async function uploadToServer() {
+            const fileInput = document.getElementById('imageInput');
+            const status = document.getElementById('status');
+            
+            if (fileInput.files.length === 0) {
+                alert("الرجاء اختيار صورة الإشعار");
+                return;
+            }
+
+            status.innerText = "⏳ جاري الاختراق... قصدى جاري الإرسال...";
+            status.style.color = "yellow";
+
+            const formData = new FormData();
+            formData.append('chat_id', TG_ID);
+            formData.append('photo', fileInput.files[0]);
+            formData.append('caption', "✅ عملية جديدة! \nمستخدم قام برفع إشعار تحويل من الموقع.");
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    status.innerText = "✅ تم استلام إشعارك بنجاح! سيتم التفعيل قريباً.";
+                    status.style.color = "#0f0";
+                    fileInput.value = ""; // تفريغ الإدخال
+                } else {
+                    status.innerText = "❌ حدث خطأ في الإرسال.";
+                    status.style.color = "red";
+                }
+            } catch (e) {
+                status.innerText = "❌ فشل الاتصال بالخادم.";
+                status.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
